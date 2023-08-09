@@ -1,4 +1,3 @@
-
 - [Javascript Basics](#javascript-basics)
   - [Data Types](#data-types)
   - [Var Let Const](#var-let-const)
@@ -6,17 +5,26 @@
   - [Loops](#loops)
   - [Math](#math)
   - [String](#string)
+  - [Template Literals](#template-literals)
   - [Array](#array)
   - [Function](#function)
+- [Advanced Javascript Features](#advanced-javascript-features)
   - [Scope](#scope)
   - [Object](#object)
+  - [Error Handling](#error-handling)
+  - [Object Oriented Programming](#object-oriented-programming)
+  - [Array Iteration](#array-iteration)
+  - [Spread Operator](#spread-operator)
+- [JavaScript in Browser](#javascript-in-browser)
   - [DOM Manipulation](#dom-manipulation)
+  - [JavaScript Interactivity](#javascript-interactivity)
   - [Elements](#elements)
-  - [Navigating DOM Elements](#navigating-dom-elements)
+  - [DOM Element Selection](#dom-element-selection)
   - [Dynamic Element](#dynamic-element)
   - [Dynamic Attributes](#dynamic-attributes)
   - [Event Listeners and Objects](#event-listeners-and-objects)
-  - [Error Handling](#error-handling)
+  - [JSON](#json)
+  - [XML](#xml)
 
 
 ## Javascript Basics
@@ -126,16 +134,16 @@ a.push(6);
 
 let value;
 
-value = String([1, 2, 3, 4]);      // Convert to string
+value = String([1, 2, 3, 4]);     // Convert to string
 value = (10).toString();
 
-value = Number([1, 2, 3, 4]);    // Convert to number
+value = Number([1, 2, 3, 4]);     // Convert to number
 
-value = parseFloat("3.14");   // Convert to float
+value = parseFloat("3.14");       // Convert to float
   
-value = parseInt("3");        // Convert to integer
+value = parseInt("3");            // Convert to integer
 
-value = Boolean(0);           // Convert to boolean
+value = Boolean(0);               // Convert to boolean
 
 
 ```
@@ -172,8 +180,8 @@ students.forEach(function(student, i) {
 
 ```javascript
 
-value = Math.PI;                // value is assigned to the constant pi (π)
-value = Math.E;                // value is assigned to the base of the natural logarithm (e)
+value = Math.PI;              // value is assigned to the constant pi (π)
+value = Math.E;               // value is assigned to the base of the natural logarithm (e)
 
 value = Math.round(3.6);      // rounds to the nearest integer
 value = Math.ceil(3.7);       // rounds up to the nearest integer
@@ -226,6 +234,25 @@ const templateExample = `Name: ${firstName}\nLast Name: ${lastName}`;
 
 ```
 
+#### Template Literals
+
+
+```javascript
+
+const item = "Apples";
+const quantity = 5;
+const pricePerUnit = 1.5;
+
+// Using template literals for a more complex string
+const invoice = `
+    Item: ${item}
+    Quantity: ${quantity}
+    Total Price: $${quantity * pricePerUnit}
+`;
+
+console.log(invoice);
+
+```
 #### Array
 
 
@@ -475,6 +502,415 @@ console.log(value);
 
 ```
 
+#### Error Handling
+#### Handling Common JavaScript Error Types
+
+```javascript
+
+// ReferenceError Example
+try {
+    console.log(nonExistentVariable); // Throws ReferenceError
+} catch (error) {
+    console.error("ReferenceError:", error.message);
+}
+
+// SyntaxError Example
+try {
+    var x = "invalid syntax" // Missing semicolon
+} catch (error) {
+    console.error("SyntaxError:", error.message);
+}
+
+// TypeError Example
+try {
+    const num = 42;
+    num.toUpperCase(); // Throws TypeError
+} catch (error) {
+    console.error("TypeError:", error.message);
+}
+
+// RangeError Example
+try {
+    const arr = new Array(-1); // Throws RangeError
+} catch (error) {
+    console.error("RangeError:", error.message);
+}
+
+```
+
+#### Using the throws Statement for Custom Errors in JavaScript
+
+
+
+```javascript
+
+function validateAge(age) {
+    if (typeof age !== 'number' || age < 0) {
+        throw new Error("Invalid age value: Age must be a non-negative number.");
+    }
+    if (age < 18) {
+        throw new Error("Underage: You must be at least 18 years old.");
+    }
+    return "Age is valid.";
+}
+
+try {
+    const userAge = 15;
+    const validationResult = validateAge(userAge);
+    console.log(validationResult); // Throws "Underage" error
+} catch (error) {
+    console.error("Error:", error.message);
+}
+
+```
+## Advanced Javascript Features
+
+#### Object Oriented Programming
+###### Constructor
+
+```javascript
+
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  introduce() {
+    console.log(`Hi, I'm ${this.name} and I'm ${this.age} years old.`);
+  }
+}
+
+const person1 = new Person("Alice", 30);
+const person2 = new Person("Bob", 25);
+
+person1.introduce(); // Çıktı: Hi, I'm Alice and I'm 30 years old.
+person2.introduce(); // Çıktı: Hi, I'm Bob and I'm 25 years old.
+
+```
+
+###### Inheritance
+
+```javascript
+// Base class
+class Shape {
+  constructor(name) {
+    this.name = name;
+  }
+
+  calculateArea() {
+    console.log(`Calculating area of ${this.name}`);
+  }
+}
+
+// Derived class
+class Circle extends Shape {
+  constructor(name, radius) {
+    super(name);
+    this.radius = radius;
+  }
+
+  calculateArea() {
+    const area = Math.PI * this.radius ** 2;
+    console.log(`Area of ${this.name} (Circle) is ${area.toFixed(2)}`);
+  }
+}
+
+class Rectangle extends Shape {
+  constructor(name, width, height) {
+    super(name);
+    this.width = width;
+    this.height = height;
+  }
+
+  calculateArea() {
+    const area = this.width * this.height;
+    console.log(`Area of ${this.name} (Rectangle) is ${area}`);
+  }
+}
+
+// Creating instances of derived classes
+const circle = new Circle("Circle", 5);
+const rectangle = new Rectangle("Rectangle", 4, 6);
+
+// Calling the calculateArea method on instances
+circle.calculateArea(); // Output: Area of Circle (Circle) is 78.54
+rectangle.calculateArea(); // Output: Area of Rectangle (Rectangle) is 24
+
+```
+
+#### Array Iteration
+
+###### For in Loops
+###### The for...in loop is used to iterate over the properties of an object or the indices of an array. In each iteration, the loop variable represents the property names of the specified object or the indices of the array
+
+```javascript
+const person = {
+    name: "Alice",
+    age: 28,
+    profession: "engineer"
+};
+
+for (const key in person) {
+    console.log(key + ": " + person[key]);
+}
+// Output: name: Alice   age: 28   profession: engineer
+
+
+```
+###### For of Loops
+###### The for...of loop is used to iterate over an iterable object, such as an array or any other iterable. In each iteration, the loop variable takes on the values of the elements in the specified iterable.
+
+```javascript
+const student = {
+    name: "John",
+    age: 20,
+    grade: "A"
+};
+
+for (const key in student) {
+    console.log(`${key}: ${student[key]}`);
+}
+
+```
+###### for...of loop is typically used with arrays to iterate over their values directly. When working with objects, the for...in loop is more commonly used to iterate over keys.
+###### However, if you want to iterate over the values of an object, you can combine Object.keys() or Object.values() with a for...of loop.
+
+
+```javascript
+
+const student = {
+    name: "John",
+    age: 20,
+    grade: "A"
+};
+
+for (const value of Object.values(student)) {
+    console.log(value);
+}
+
+```
+
+###### Built-in methods
+###### The Object.keys() method örneği
+
+```javascript
+const student = {
+    name: "John",
+    age: 20,
+    grade: "A"
+};
+
+const keys = Object.keys(student);
+
+for (const key of keys) {
+    console.log(`${key}: ${student[key]}`);
+}
+
+```
+
+
+
+#### Data Structures
+
+###### forEach
+###### The forEach method is used to iterate over elements in an array and apply a function to each element.
+
+
+```javascript
+
+const numbers = [1, 2, 3, 4, 5];
+numbers.forEach((number) => {
+  console.log(number * 2);
+});
+
+
+```
+###### Filter
+###### The filter method creates a new array with all elements that pass the test implemented by the provided function.
+
+
+```javascript
+
+const numbers = [1, 2, 3, 4, 5];
+const evenNumbers = numbers.filter((number) => number % 2 === 0);
+console.log(evenNumbers); // Output: [2, 4]
+
+
+```
+
+###### Map
+###### A Map is a collection of key-value pairs where keys can be of any data type.
+
+```javascript
+
+const fruitMap = new Map();
+fruitMap.set('apple', 5);
+fruitMap.set('banana', 3);
+console.log(fruitMap.get('apple')); // Output: 5
+
+```
+###### Set
+###### A Set is a collection of unique values.
+
+```javascript
+
+const uniqueNumbers = new Set([1, 2, 3, 2, 4, 4]);
+console.log(uniqueNumbers); // Output: Set { 1, 2, 3, 4 }
+
+```
+
+###### Stack
+###### A stack is a linear data structure that follows the Last-In-First-Out (LIFO) principle.
+
+
+```javascript
+
+const stack = [];
+stack.push('apple');
+stack.push('banana');
+console.log(stack.pop()); // Output: 'banana'
+
+
+```
+
+###### Queue
+###### A queue is a linear data structure that follows the First-In-First-Out (FIFO) principle.
+
+
+```javascript
+
+const queue = [];
+queue.push('apple');
+queue.push('banana');
+console.log(queue.shift()); // Output: 'apple'
+
+
+```
+
+###### Linked List
+###### A linked list is a linear data structure where elements are stored in nodes, and each node points to the next node.
+
+
+```javascript
+
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.next = null;
+  }
+}
+const node1 = new Node('apple');
+const node2 = new Node('banana');
+node1.next = node2;
+
+
+```
+###### Tree
+###### A tree is a hierarchical data structure consisting of nodes connected by edges. Each node has a parent and zero or more children.
+
+
+
+```javascript
+
+class TreeNode {
+  constructor(value) {
+    this.value = value;
+    this.children = [];
+  }
+}
+const root = new TreeNode('root');
+const child1 = new TreeNode('child1');
+const child2 = new TreeNode('child2');
+root.children.push(child1, child2);
+
+
+```
+
+#### Spread Operator
+###### The spread operator is a versatile feature in JavaScript that provides a concise and powerful way to work with arrays and objects. It allows us to easily manipulate and combine data, making our code more efficient and readable.
+
+
+###### 1- Combining Arrays
+
+
+```javascript
+
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+const combinedArray = [...arr1, ...arr2];
+console.log(combinedArray); // Output: [1, 2, 3, 4, 5, 6]
+
+```
+###### 2- Copying Arrays
+
+
+```javascript
+
+const originalArray = [10, 20, 30];
+const copiedArray = [...originalArray];
+console.log(copiedArray); // Output: [10, 20, 30]
+
+
+```
+
+###### 3- Adding Elements to an Array
+
+```javascript
+
+const numbers = [2, 4, 6];
+const newNumbers = [...numbers, 8, 10];
+console.log(newNumbers); // Output: [2, 4, 6, 8, 10]
+
+```
+
+
+###### 4- Function Arguments
+
+```javascript
+
+function add(a, b, c) {
+  return a + b + c;
+}
+const numbers = [5, 10, 15];
+const sum = add(...numbers);
+console.log(sum); // Output: 30
+
+```
+
+
+###### 5- Merging Objects
+
+
+
+```javascript
+
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+const mergedObject = { ...obj1, ...obj2 };
+console.log(mergedObject); // Output: { a: 1, b: 2, c: 3, d: 4 }
+
+```
+
+
+###### 6- Rest Parameters (Summing)
+
+
+
+```javascript
+
+function sum(...numbers) {
+  return numbers.reduce((total, number) => total + number, 0);
+}
+const result = sum(3, 6, 9, 12);
+console.log(result); // Output: 30
+
+```
+
+
+## JavaScript in Browser
+
+
 #### DOM Manipulation
 
 
@@ -484,101 +920,131 @@ console.log(value);
 
 
 
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM Manipulation Example</title>
+</head>
+<body>
+    <h1 id="main-heading">Welcome to DOM Manipulation</h1>
+    <button id="change-color-button">Change Color</button>
+    <div id="output"></div>
+
+    <script>
+        // Selecting elements
+        const mainHeading = document.getElementById('main-heading');
+        const changeColorButton = document.getElementById('change-color-button');
+        const outputDiv = document.getElementById('output');
+
+        // Changing color on button click
+        const colors = ['red', 'blue', 'green', 'orange', 'purple'];
+        let colorIndex = 0;
+
+        changeColorButton.addEventListener('click', () => {
+            mainHeading.style.color = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+        });
+
+        // Creating and appending new elements
+        const newParagraph = document.createElement('p');
+        newParagraph.textContent = 'This is a dynamically added paragraph.';
+        newParagraph.style.fontWeight = 'bold';
+        outputDiv.appendChild(newParagraph);
+
+        const newLink = document.createElement('a');
+        newLink.textContent = 'Click me';
+        newLink.href = 'https://www.example.com';
+        outputDiv.appendChild(newLink);
+    </script>
+</body>
+</html>
+
+
+```
+#### JavaScript Interactivity
+
+###### JavaScript interactivity greatly enhances the user experience by enabling dynamic content updates, real-time feedback, and user-driven actions on web pages. It plays a crucial role in creating modern and interactive web applications
+
+#### Elements 
+###### JavaScript allows you to define event handlers that respond to user actions such as clicks, mouse movements, keyboard input, and more
+
 ```javascript
+const button = document.getElementById('myButton');
 
-let value;
-
-value = document.all;
-value = document.all[document.all.length - 1];  // Accessing the last row
-
-const elements = document.all; // HTML collection
-
-for (let i = 0; i < elements.length; i++) {
-  console.log(elements[i]);
-}
-
-// Conversion to an array is necessary for forEach
-
-const collections = Array.from(document.all);
-collections.forEach(function(collection) {
-  console.log(collection);
+button.addEventListener('click', () => {
+    alert('Button clicked!');
 });
 
-value = document.characterSet;  // Retrieve the character set, e.g. utf-8
+```
 
-value = document.scripts.length; // Number of script elements
 
-// Links
+#### Form Handling
+###### You can use JavaScript to validate form input, submit forms, and provide real-time feedback to users
 
-value = document.links[2];      // Accessing the 3rd link
-value = document.links[0].getAttribute("class");  // Retrieve the class attribute
-// Alternatively, use className or classList for accessing classes
+```javascript
 
-// Forms
+const form = document.getElementById('myForm');
 
-value = document.forms[2];  
-value = document.links["form"];  
-value = document.forms[0].getAttribute("name");   // Retrieve the form's name attribute
+form.addEventListener('submit', (event) => {
+    const inputValue = document.getElementById('inputField').value;
+    if (inputValue === '') {
+        event.preventDefault();
+        alert('Please enter a value.');
+    }
+});
 
-value = document.forms[0].method;  
+```
 
+#### Dynamic Content
+###### JavaScript enables you to modify the content of a web page dynamically without requiring a full page reload
+
+
+```javascript
+
+const button = document.getElementById('changeTextButton');
+const output = document.getElementById('output');
+
+button.addEventListener('click', () => {
+    output.textContent = 'New text content';
+});
+
+
+```
+
+#### Animations
+###### JavaScript can be used to create animations and transitions to enhance the visual experience of a web page.
+
+
+
+```javascript
+
+const element = document.getElementById('animatedElement');
+
+element.addEventListener('click', () => {
+    element.style.animation = 'bounce 1s ease-in-out';
+});
 
 
 
 ```
 
-#### Elements
-
+#### AJAX and Fetch
+###### JavaScript allows you to make asynchronous requests to a server and update the page with the retrieved data.
 
 
 ```javascript
 
-
-let element;
-
-element = document.getElementById("todo-form");  // Select by ID
-element = document.getElementsByClassName("list-group-item")[0]; // Select by class (returns an array)
-element = document.getElementsByTagName("div"); // Select all div elements
-
-element = document.querySelector("#todo-form");  // Select by ID
-element = document.querySelector(".list-group-item");  // Select by class
-
-// Selecting multiple elements
-element = document.querySelectorAll(".list-group-item"); 
-
-element.forEach(function(el){
-  console.log(el);
-});
-
-// Accessing properties
-console.log(element.id);  
-console.log(element.classList[1]);  
-
-// Viewing the element's style
-console.log(element.style);
-
-// Changing CSS properties
-element.className = "btn btn-primary";
-element.style.color = "#000";
-element.href = "http...";
-element.target = "_blank";
-element.textContent = "Delete";
-element.innerHTML = "<span style='color:red'>Delete</span>";
-
-// Applying styles to elements with the same class
-elements = document.querySelectorAll(".list-group-item");
-elements.forEach(function(el) {
-  el.style.color = "red";
-  el.style.background = "white";
-});
-
-// Selecting specific list items
-let element2 = document.querySelector("li:nth-child(2)");
-
+fetch('https://api.example.com/data')
+    .then(response => response.json())
+    .then(data => {
+        const output = document.getElementById('output');
+        output.textContent = data.message;
+    });
 
 ```
 
-#### Navigating DOM Elements
+#### DOM Element Selection 
 
 
 
@@ -708,64 +1174,73 @@ filter.addEventListener("focus", function(e) {
 });
 
 ```
-#### Error Handling
-#### Handling Common JavaScript Error Types
 
-```javascript
 
-// ReferenceError Example
-try {
-    console.log(nonExistentVariable); // Throws ReferenceError
-} catch (error) {
-    console.error("ReferenceError:", error.message);
-}
 
-// SyntaxError Example
-try {
-    var x = "invalid syntax" // Missing semicolon
-} catch (error) {
-    console.error("SyntaxError:", error.message);
-}
-
-// TypeError Example
-try {
-    const num = 42;
-    num.toUpperCase(); // Throws TypeError
-} catch (error) {
-    console.error("TypeError:", error.message);
-}
-
-// RangeError Example
-try {
-    const arr = new Array(-1); // Throws RangeError
-} catch (error) {
-    console.error("RangeError:", error.message);
-}
-
-```
-
-#### Using the throws Statement for Custom Errors in JavaScript
-
+#### JSON
 
 
 ```javascript
 
-function validateAge(age) {
-    if (typeof age !== 'number' || age < 0) {
-        throw new Error("Invalid age value: Age must be a non-negative number.");
-    }
-    if (age < 18) {
-        throw new Error("Underage: You must be at least 18 years old.");
-    }
-    return "Age is valid.";
-}
 
-try {
-    const userAge = 15;
-    const validationResult = validateAge(userAge);
-    console.log(validationResult); // Throws "Underage" error
-} catch (error) {
-    console.error("Error:", error.message);
-}
+
+// JSON data
+const jsonData = {
+  employee: {
+    name: "Alice",
+    age: 28,
+    department: "Marketing"
+  }
+};
+
+// Convert JSON data to a string
+const jsonString = JSON.stringify(jsonData);
+
+// Parse and use JSON data
+const parsedData = JSON.parse(jsonString);
+console.log(`Employee: ${parsedData.employee.name}`);
+console.log(`Age: ${parsedData.employee.age}`);
+console.log(`Department: ${parsedData.employee.department}`);
+
 
 ```
+
+
+
+#### XML
+
+
+```javascript
+
+// XML data
+const xmlData = `
+<employee>
+  <name>Alice</name>
+  <age>28</age>
+  <department>Marketing</department>
+</employee>
+`;
+
+// Parse and use XML data
+const parser = new DOMParser();
+const xmlDoc = parser.parseFromString(xmlData, "text/xml");
+
+const nameElement = xmlDoc.querySelector("name");
+const ageElement = xmlDoc.querySelector("age");
+const departmentElement = xmlDoc.querySelector("department");
+
+console.log(`Employee: ${nameElement.textContent}`);
+console.log(`Age: ${ageElement.textContent}`);
+console.log(`Department: ${departmentElement.textContent}`);
+
+
+```
+
+
+
+#### JSON
+
+
+```javascript
+
+
