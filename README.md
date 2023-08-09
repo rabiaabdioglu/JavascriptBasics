@@ -1,0 +1,2 @@
+# JavascriptBasics
+Basic Javascript Notes
